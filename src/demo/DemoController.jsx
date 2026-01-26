@@ -8,11 +8,12 @@ function DemoController() {
   const currentStage = stages[stageIndex]
 
   useEffect(() => {
-    const interval = setInterval(() => {
+    const duration = currentStage === 'chaos' ? 10000 : 4000
+    const timeout = setTimeout(() => {
       setStageIndex((prev) => (prev + 1) % stages.length)
-    }, 4000)
-    return () => clearInterval(interval)
-  }, [])
+    }, duration)
+    return () => clearTimeout(timeout)
+  }, [stageIndex, currentStage])
 
   const renderStage = () => {
     if (currentStage === 'chaos') {
