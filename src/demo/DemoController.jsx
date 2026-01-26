@@ -1,9 +1,11 @@
 import { useState, useEffect } from 'react'
+import Chaos from './stages/Chaos'
 
 const stages = ["chaos", "aggregation", "qualification", "call", "dashboard", "contrast"]
 
 function DemoController() {
   const [stageIndex, setStageIndex] = useState(0)
+  const currentStage = stages[stageIndex]
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -11,6 +13,13 @@ function DemoController() {
     }, 4000)
     return () => clearInterval(interval)
   }, [])
+
+  const renderStage = () => {
+    if (currentStage === 'chaos') {
+      return <Chaos />
+    }
+    return currentStage
+  }
 
   return (
     <div style={{
@@ -20,7 +29,7 @@ function DemoController() {
       height: '100vh',
       width: '100vw'
     }}>
-      {stages[stageIndex]}
+      {renderStage()}
     </div>
   )
 }
