@@ -112,6 +112,7 @@ body .wa-btn {
   display: flex;
   align-items: center;
   justify-content: center;
+  overflow: hidden;
 }
 
 #screen-1::before {
@@ -128,7 +129,7 @@ body .wa-btn {
   align-items: center;
   justify-content: center;
   min-height: 100vh;
-  padding: calc(var(--unit) * 6);
+  padding: 48px calc(var(--unit) * 6) 48px;
   text-align: center;
   max-width: 42rem;
   margin: 0 auto;
@@ -139,11 +140,11 @@ body .wa-btn {
 .keynote-headline {
   font-family: "Inter", sans-serif;
   font-weight: 300;
-  font-size: clamp(14px, 1.5vw, 18px);
+  font-size: clamp(11px, 1.2vw, 13px);
   color: var(--text-secondary);
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  margin: 0 0 calc(var(--unit) * 5);
+  margin: 0 0 24px;
   opacity: 0;
   animation: painFadeIn 0.8s var(--ease) 0s forwards;
 }
@@ -151,15 +152,15 @@ body .wa-btn {
 .keynote-stats {
   display: flex;
   flex-direction: column;
-  gap: calc(var(--unit) * 2);
-  margin-bottom: calc(var(--unit) * 4);
+  gap: 24px;
+  margin-bottom: 24px;
   width: 100%;
 }
 
 .keynote-stat {
   font-family: "Inter", sans-serif;
   font-weight: 800;
-  font-size: clamp(32px, 5vw, 64px);
+  font-size: clamp(18px, 3vw, 36px);
   letter-spacing: -0.04em;
   color: var(--text);
   margin: 0;
@@ -176,10 +177,10 @@ body .wa-btn {
 .keynote-punchline {
   font-family: "Inter", sans-serif;
   font-weight: 800;
-  font-size: clamp(36px, 6vw, 72px);
+  font-size: clamp(18px, 3vw, 36px);
   letter-spacing: -0.04em;
   color: var(--red);
-  margin: 0 0 calc(var(--unit) * 5);
+  margin: 0 0 24px;
   opacity: 0;
   animation: painFadeIn 0.8s var(--ease) 10s forwards;
 }
@@ -193,6 +194,7 @@ body .wa-btn {
   border: none;
   padding: 0;
   cursor: pointer;
+  margin-top: 32px;
   opacity: 0;
   animation: painFadeIn 0.6s var(--ease) 12s forwards;
   transition: opacity 0.2s var(--ease);
@@ -350,32 +352,34 @@ body .wa-btn {
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding-top: 60px;
+  padding-top: 32px;
 }
 
 .viz-tagline {
   font-family: "Inter", sans-serif;
   font-weight: 700;
-  font-size: clamp(20px, 2.5vw, 32px);
+  font-size: clamp(16px, 2vw, 28px);
   color: var(--text);
-  margin: 0 0 calc(var(--unit) * 3);
+  margin: 0 0 16px;
   text-align: center;
 }
 
 .viz-container {
-  position: relative;
-  flex: 1;
+  position: absolute;
+  inset: 0;
   width: 100%;
   max-width: min(90vw, 800px);
+  left: 50%;
+  transform: translateX(-50%);
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: center;
 }
 
-/* Hub: 120px outer, inner 80px, pulse ring */
+/* Hub: 120px outer, inner 80px, pulse ring — center at 58% viewport height */
 .viz-hub {
   position: absolute;
-  top: 50%;
+  top: 58%;
   left: 50%;
   transform: translate(-50%, -50%);
   width: 120px;
@@ -431,10 +435,10 @@ body .wa-btn {
   100% { transform: scale(1); }
 }
 
-/* Source nodes: hexagonal at 260px radius, 64px circles */
+/* Source nodes: hexagonal at 260px radius, 64px circles — anchor at 58% to match hub */
 .viz-source {
   position: absolute;
-  top: 50%;
+  top: 58%;
   left: 50%;
   display: flex;
   flex-direction: column;
@@ -1149,25 +1153,26 @@ body .wa-btn {
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 60px calc(var(--unit) * 4) calc(var(--unit) * 6);
+  padding: 32px calc(var(--unit) * 4) 16px;
+  overflow: hidden;
 }
 
 .roadmap-headline {
   font-family: "Inter", sans-serif;
   font-weight: 800;
-  font-size: clamp(28px, 4vw, 48px);
+  font-size: clamp(22px, 3vw, 36px);
   letter-spacing: -0.04em;
   color: var(--text);
-  margin: 0 0 calc(var(--unit) * 1);
+  margin: 0 0 24px;
   text-align: center;
 }
 
 .roadmap-subtitle {
   font-family: "Inter", sans-serif;
   font-weight: 300;
-  font-size: 16px;
+  font-size: clamp(11px, 1.2vw, 14px);
   color: var(--text-secondary);
-  margin: 0 0 calc(var(--unit) * 6);
+  margin: 0 0 24px;
   text-align: center;
 }
 
@@ -1178,6 +1183,7 @@ body .wa-btn {
   max-width: 1200px;
   align-items: stretch;
   gap: 0;
+  min-height: 0;
 }
 
 .roadmap-col {
@@ -1185,7 +1191,7 @@ body .wa-btn {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  padding: calc(var(--unit) * 4);
+  padding: 24px;
   opacity: 0;
   transform: translateY(20px);
   animation: roadmapColIn 0.5s var(--ease) forwards;
@@ -1234,7 +1240,7 @@ body .wa-btn {
 
 .roadmap-title {
   font-family: "Inter", sans-serif;
-  font-size: 22px;
+  font-size: clamp(16px, 1.8vw, 20px);
   font-weight: 700;
   color: var(--text);
   margin: 0 0 calc(var(--unit) * 2);
@@ -1242,9 +1248,9 @@ body .wa-btn {
 
 .roadmap-desc {
   font-family: "Inter", sans-serif;
-  font-size: 14px;
+  font-size: clamp(11px, 1.1vw, 13px);
   font-weight: 400;
-  line-height: 1.8;
+  line-height: 1.6;
   color: var(--text-secondary);
   margin: 0 0 calc(var(--unit) * 3);
 }
@@ -1253,9 +1259,12 @@ body .wa-btn {
   list-style: none;
   margin: 0;
   padding: 0;
-  font-size: 14px;
+  font-size: clamp(10px, 1vw, 12px);
   color: var(--text-secondary);
-  line-height: 1.8;
+  line-height: 1.6;
+  gap: 6px;
+  display: flex;
+  flex-direction: column;
 }
 
 .roadmap-features li::before {
@@ -1268,7 +1277,8 @@ body .wa-btn {
 
 .roadmap-timeline {
   margin-top: auto;
-  padding-top: calc(var(--unit) * 4);
+  padding-top: 16px;
+  padding-bottom: 16px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -1302,7 +1312,7 @@ body .wa-btn {
 
 .roadmap-you-are-here {
   font-family: "Inter", sans-serif;
-  font-size: 12px;
+  font-size: 11px;
   font-weight: 400;
   color: var(--text-tertiary);
   margin: 0;
