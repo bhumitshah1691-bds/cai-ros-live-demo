@@ -1,13 +1,271 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>cai-ros-live-demo</title>
-  </head>
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.jsx"></script>
-  </body>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CAI-ROS Live Demo</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main class="presentation">
+    <div id="screen-1" class="screen active">
+      <div class="keynote">
+        <h1 class="keynote-headline">Right now, somewhere in Ahmedabad...</h1>
+        <div class="keynote-stats">
+          <p class="keynote-stat">A serious buyer just enquired about a 1.2Cr flat in Bopal.</p>
+          <p class="keynote-stat">Your salesperson saw the lead. Decided he 'didn't look serious'.</p>
+          <p class="keynote-stat">That buyer just booked with your competitor.</p>
+          <p class="keynote-stat">This happened 47 times last month.</p>
+        </div>
+        <p class="keynote-punchline">You never knew.</p>
+        <button type="button" class="keynote-continue" id="keynote-continue">Continue</button>
+      </div>
+    </div>
+    <div id="screen-2" class="screen split-screen">
+      <div class="split-left">
+        <h2 class="split-label">Today</h2>
+        <ul class="split-list">
+          <li>Salesperson checks mood before calling</li>
+          <li>Lead waits 6 hours for first response</li>
+          <li>Follow-up happens "when someone remembers"</li>
+          <li>Owner asks "what happened to that lead?" Gets silence.</li>
+          <li>Ghost visits. Wasted Sundays. Lost deals.</li>
+        </ul>
+      </div>
+      <div class="split-right">
+        <h2 class="split-label">CAI-ROS</h2>
+        <ul class="split-list">
+          <li>Lead enquires at 2am. System responds in 4 seconds.</li>
+          <li>Qualification complete before salesperson wakes up.</li>
+          <li>Follow-up is a law. Not a task.</li>
+          <li>Owner sees everything. Real time. No excuses.</li>
+          <li>Every serious buyer reaches a salesperson. Every time.</li>
+        </ul>
+      </div>
+      <button type="button" class="split-cta" id="see-it-live">See It Live</button>
+    </div>
+    <div id="screen-3" class="screen viz-screen">
+      <div class="viz-overlay">
+        <p class="viz-tagline">Every source. One system. Zero chaos.</p>
+
+        <div class="viz-container">
+          <!-- CAI-ROS Hub (center) -->
+          <div class="viz-hub" id="viz-hub">
+            <div class="viz-hub-ring"></div>
+            <div class="viz-hub-core">
+              <span class="viz-hub-text">CAI-ROS</span>
+            </div>
+          </div>
+
+          <!-- Lead source nodes (circular arrangement) -->
+          <div class="viz-source viz-source-top" data-source="meta" data-angle="0">
+            <div class="viz-source-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+            </div>
+            <span class="viz-source-label">Meta Ads</span>
+          </div>
+          <div class="viz-source viz-source-tr" data-source="portals" data-angle="60">
+            <div class="viz-source-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+            </div>
+            <span class="viz-source-label">99acres / MagicBricks</span>
+          </div>
+          <div class="viz-source viz-source-right" data-source="whatsapp" data-angle="120">
+            <div class="viz-source-icon viz-source-whatsapp" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+            </div>
+            <span class="viz-source-label">WhatsApp Enquiries</span>
+          </div>
+          <div class="viz-source viz-source-br" data-source="website" data-angle="180">
+            <div class="viz-source-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+            </div>
+            <span class="viz-source-label">Website</span>
+          </div>
+          <div class="viz-source viz-source-bl" data-source="referrals" data-angle="240">
+            <div class="viz-source-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+            </div>
+            <span class="viz-source-label">Referrals</span>
+          </div>
+          <div class="viz-source viz-source-left" data-source="google" data-angle="300">
+            <div class="viz-source-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>
+            </div>
+            <span class="viz-source-label">Google Ads</span>
+          </div>
+        </div>
+
+        <!-- Lead card (appears on particle hit) -->
+        <div class="viz-lead-card" id="viz-lead-card" aria-live="polite">
+          <div class="viz-lead-card-inner">
+            <p class="viz-lead-name" id="viz-lead-name">—</p>
+            <p class="viz-lead-meta"><span id="viz-lead-source">—</span> · <span id="viz-lead-location">—</span></p>
+            <p class="viz-lead-grade" id="viz-lead-grade">—</p>
+          </div>
+        </div>
+
+        <!-- Right-side feed -->
+        <div class="viz-feed">
+          <h3 class="viz-feed-title">Live Feed</h3>
+          <ul class="viz-feed-list" id="viz-feed-list"></ul>
+        </div>
+
+        <!-- Bottom counter -->
+        <div class="viz-counter">
+          <span class="viz-counter-label">Leads Captured Today:</span>
+          <span class="viz-counter-value" id="viz-counter-value">0</span>
+        </div>
+      </div>
+    </div>
+    <div id="screen-4" class="screen whatsapp-screen">
+      <div class="wa-phone">
+        <header class="wa-header">
+          <div class="wa-header-back"></div>
+          <div class="wa-header-avatar wa-bot-avatar" aria-hidden="true">
+            <div class="wa-avatar-geo">
+              <span class="wa-avatar-text">CR</span>
+            </div>
+          </div>
+          <div class="wa-header-info">
+            <h1 class="wa-header-name">CAI-ROS</h1>
+            <p class="wa-header-status">Bopal Heights · Lead qualification</p>
+          </div>
+        </header>
+        <div class="wa-chat-paper">
+          <div class="wa-messages" id="wa-messages"></div>
+          <div class="wa-buttons-wrap" id="wa-buttons-wrap"></div>
+          <div class="wa-result-card-wrap" id="wa-result-card-wrap">
+            <div class="wa-result-card" id="wa-result-card">
+              <div class="wa-result-badge">A-GRADE LEAD</div>
+              <p class="wa-result-details" id="wa-result-details"></p>
+              <p class="wa-result-status" id="wa-result-status"></p>
+              <p class="wa-result-time" id="wa-result-time"></p>
+            </div>
+          </div>
+        </div>
+        <p class="wa-footer-stats" id="wa-footer-stats">Time taken: 94 seconds. Human involvement: Zero.</p>
+      </div>
+    </div>
+    <div id="screen-5" class="screen dashboard-screen">
+      <div class="dashboard">
+        <header class="dashboard-header">
+          <h1 class="dashboard-title">CAI-ROS Lead Command</h1>
+          <p class="dashboard-subtitle">Ahmedabad · Live</p>
+        </header>
+
+        <section class="dashboard-stats" aria-label="Live stats">
+          <div class="stat stat-pulse">
+            <span class="stat-label">Leads Today</span>
+            <span class="stat-value" data-value="23">23</span>
+          </div>
+          <div class="stat stat-grade-a stat-pulse">
+            <span class="stat-label">A-Grade</span>
+            <span class="stat-value">8</span>
+          </div>
+          <div class="stat stat-grade-b stat-pulse">
+            <span class="stat-label">B-Grade</span>
+            <span class="stat-value">11</span>
+          </div>
+          <div class="stat stat-grade-c stat-pulse">
+            <span class="stat-label">C-Grade</span>
+            <span class="stat-value">4</span>
+          </div>
+          <div class="stat stat-response stat-pulse">
+            <span class="stat-label">Response Time</span>
+            <span class="stat-value">4s <span class="stat-unit">avg</span></span>
+          </div>
+        </section>
+
+        <section class="dashboard-funnel" aria-label="Conversion funnel">
+          <h2 class="funnel-title">Conversion Funnel</h2>
+          <div class="funnel-track">
+            <div class="funnel-stage" data-count="23">
+              <span class="funnel-count">23</span>
+              <span class="funnel-label">Leads</span>
+            </div>
+            <div class="funnel-connector" data-drop="-17%"><span class="funnel-drop">-17%</span></div>
+            <div class="funnel-stage" data-count="19">
+              <span class="funnel-count">19</span>
+              <span class="funnel-label">Qualified</span>
+            </div>
+            <div class="funnel-connector" data-drop="-37%"><span class="funnel-drop">-37%</span></div>
+            <div class="funnel-stage" data-count="12">
+              <span class="funnel-count">12</span>
+              <span class="funnel-label">Site Visits Booked</span>
+            </div>
+            <div class="funnel-connector" data-drop="-42%"><span class="funnel-drop">-42%</span></div>
+            <div class="funnel-stage" data-count="7">
+              <span class="funnel-count">7</span>
+              <span class="funnel-label">Confirmed</span>
+            </div>
+            <div class="funnel-connector" data-drop="-57%"><span class="funnel-drop">-57%</span></div>
+            <div class="funnel-stage funnel-stage-end" data-count="3">
+              <span class="funnel-count">3</span>
+              <span class="funnel-label">Bookings</span>
+            </div>
+          </div>
+        </section>
+
+        <section class="dashboard-timeline" aria-label="Follow-up timeline">
+          <h2 class="timeline-title">Follow-up Enforcement</h2>
+          <div class="lead-cards">
+            <article class="lead-card lead-card-confirmed">
+              <div class="lead-card-header">
+                <span class="lead-name">Rajesh Patel</span>
+                <span class="lead-badge lead-badge-confirmed">CONFIRMED</span>
+              </div>
+              <p class="lead-meta">Bopal · 1.2Cr</p>
+              <p class="lead-action">Site visit tomorrow 11am</p>
+              <time class="lead-time" datetime="2025-02-15T11:00">15 Feb, 11:00</time>
+            </article>
+            <article class="lead-card lead-card-awaiting">
+              <div class="lead-card-header">
+                <span class="lead-name">Mehul Shah</span>
+                <span class="lead-badge lead-badge-awaiting">Awaiting response</span>
+              </div>
+              <p class="lead-meta">Shela · 85L</p>
+              <p class="lead-action">Day 3 follow-up sent</p>
+              <time class="lead-time" datetime="2025-02-12T09:00">12 Feb, 09:00</time>
+            </article>
+            <article class="lead-card lead-card-reminder">
+              <div class="lead-card-header">
+                <span class="lead-name">Priya Desai</span>
+                <span class="lead-badge lead-badge-auto">Auto reminder</span>
+              </div>
+              <p class="lead-meta">South Bopal · 90L</p>
+              <p class="lead-action">Day 7 reminder triggered automatically</p>
+              <time class="lead-time" datetime="2025-02-14T08:00">14 Feb, 08:00</time>
+            </article>
+          </div>
+        </section>
+
+        <footer class="dashboard-footer">
+          <p class="dashboard-last-action">Last human action: 3 days ago.</p>
+        </footer>
+      </div>
+    </div>
+    <div id="screen-6" class="screen closing-screen">
+      <div class="closing-inner">
+        <div class="closing-story" id="closing-story">
+          <p class="closing-line" id="closing-line-1">Your competitor is still calling leads manually.</p>
+          <p class="closing-line" id="closing-line-2">Their best salesperson just resigned.</p>
+          <p class="closing-line" id="closing-line-3">Their owner just asked — where did all our leads go?</p>
+        </div>
+        <div class="closing-final" id="closing-final">
+          <p class="closing-punchline" id="closing-punchline">You already know the answer.</p>
+          <div class="closing-logo" id="closing-logo" aria-hidden="true">CAI-ROS</div>
+          <p class="closing-tagline" id="closing-tagline">The Sales Discipline Engine. Built for Ahmedabad.</p>
+          <button type="button" class="closing-cta" id="closing-lets-begin">Let's Begin</button>
+        </div>
+      </div>
+    </div>
+  </main>
+  <script src="demo.js"></script>
+  <script src="viz.js"></script>
+  <script src="wa-chat.js"></script>
+</body>
 </html>
