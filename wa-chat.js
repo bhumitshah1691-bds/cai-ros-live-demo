@@ -1,12 +1,15 @@
 /**
- * CAI-ROS WhatsApp chat simulation — auto-play with typing delays
+ * CAI-ROS WhatsApp chat simulation
+ * Min 1.8s between bot messages; typing 1.2s before each; buttons 0.8s after message; 0.6s after user choice.
+ * Total flow ~35–40 seconds.
  */
+
 (function () {
-  const MSG_DELAY_PER_CHAR = 42;
-  const MIN_MSG_DELAY = 400;
-  const AFTER_LEAD_DELAY = 1200;
-  const AFTER_BUTTON_DELAY = 1800;
-  const TYPING_SHOW_MS = 800;
+  const MIN_BOT_DELAY_MS = 1800;
+  const TYPING_DURATION_MS = 1200;
+  const BUTTONS_APPEAR_MS = 800;
+  const AFTER_USER_SELECT_MS = 600;
+  const AFTER_LEAD_DELAY_MS = 800;
 
   const messagesEl = document.getElementById("wa-messages");
   const buttonsWrap = document.getElementById("wa-buttons-wrap");
@@ -77,10 +80,6 @@
     scrollToBottom();
   }
 
-  function typeDelay(str) {
-    return Math.max(MIN_MSG_DELAY, str.length * MSG_DELAY_PER_CHAR);
-  }
-
   function renderButtons(labels, chosenIndex) {
     buttonsWrap.innerHTML = "";
     labels.forEach(function (label, i) {
@@ -102,8 +101,7 @@
   function chooseButton(index) {
     const btn = buttonsWrap.querySelectorAll(".wa-btn")[index];
     if (btn) {
-      btn.style.transform = "scale(0.97)";
-      btn.style.boxShadow = "inset 0 1px 3px rgba(0,0,0,0.12)";
+      btn.style.opacity = "0.8";
     }
   }
 
@@ -119,107 +117,111 @@
     if (footerStats) footerStats.style.display = "block";
 
     runPromise = (async function () {
-      var now = new Date();
-      var timeStr = formatTime(now);
+      var timeStr = formatTime(new Date());
 
       // 1) Bot intro
       showTyping();
-      await delay(TYPING_SHOW_MS);
+      await delay(TYPING_DURATION_MS);
       hideTyping();
       var intro =
         "Namaste! Thank you for your interest in Bopal Heights. I have a few quick questions to find the perfect option for you. Ready?";
-      await delay(100);
       addBubble(intro, false, timeStr);
-      await delay(AFTER_LEAD_DELAY + 400);
+      await delay(MIN_BOT_DELAY_MS);
 
       // 2) Lead: Haan, sure
       addBubble("Haan, sure", true, formatTime(new Date()));
-      await delay(AFTER_LEAD_DELAY + 600);
+      await delay(AFTER_USER_SELECT_MS);
 
-      // 3) Bot: budget question + buttons
+      // 3) Bot: budget + buttons
       showTyping();
-      await delay(TYPING_SHOW_MS);
+      await delay(TYPING_DURATION_MS);
       hideTyping();
       addBubble("What is your budget range?", false, formatTime(new Date()));
+      await delay(BUTTONS_APPEAR_MS);
       renderButtons(
         ["Under 50L", "50–75L", "75L–1Cr", "1Cr+"],
         2
       );
-      await delay(AFTER_BUTTON_DELAY);
+      await delay(AFTER_LEAD_DELAY_MS);
       chooseButton(2);
       await delay(500);
       addBubble("75L–1Cr", true, formatTime(new Date()));
       hideButtons();
-      await delay(AFTER_LEAD_DELAY);
+      await delay(AFTER_USER_SELECT_MS);
 
       // 4) When planning to buy
       showTyping();
-      await delay(TYPING_SHOW_MS);
+      await delay(TYPING_DURATION_MS);
       hideTyping();
       addBubble("When are you planning to buy?", false, formatTime(new Date()));
+      await delay(BUTTONS_APPEAR_MS);
       renderButtons(
         ["Within 3 months", "3–6 months", "6–12 months", "Just exploring"],
         0
       );
-      await delay(AFTER_BUTTON_DELAY);
+      await delay(AFTER_LEAD_DELAY_MS);
       chooseButton(0);
       await delay(500);
       addBubble("Within 3 months", true, formatTime(new Date()));
       hideButtons();
-      await delay(AFTER_LEAD_DELAY);
+      await delay(AFTER_USER_SELECT_MS);
 
       // 5) Personal or investment
       showTyping();
-      await delay(TYPING_SHOW_MS);
+      await delay(TYPING_DURATION_MS);
       hideTyping();
       addBubble(
         "Are you buying for personal use or investment?",
         false,
         formatTime(new Date())
       );
+      await delay(BUTTONS_APPEAR_MS);
       renderButtons(["Personal", "Investment", "Both"], 0);
-      await delay(AFTER_BUTTON_DELAY);
+      await delay(AFTER_LEAD_DELAY_MS);
       chooseButton(0);
       await delay(500);
       addBubble("Personal", true, formatTime(new Date()));
       hideButtons();
-      await delay(AFTER_LEAD_DELAY);
+      await delay(AFTER_USER_SELECT_MS);
 
       // 6) Location
       showTyping();
-      await delay(TYPING_SHOW_MS);
+      await delay(TYPING_DURATION_MS);
       hideTyping();
       addBubble("Which location interests you?", false, formatTime(new Date()));
+      await delay(BUTTONS_APPEAR_MS);
       renderButtons(["Bopal", "Shela", "South Bopal", "GIFT City"], 0);
-      await delay(AFTER_BUTTON_DELAY);
+      await delay(AFTER_LEAD_DELAY_MS);
       chooseButton(0);
       await delay(500);
       addBubble("Bopal", true, formatTime(new Date()));
       hideButtons();
-      await delay(AFTER_LEAD_DELAY);
+      await delay(AFTER_USER_SELECT_MS);
 
       // 7) How to keep updated
       showTyping();
-      await delay(TYPING_SHOW_MS);
+      await delay(TYPING_DURATION_MS);
       hideTyping();
       addBubble("Perfect. How should we keep you updated?", false, formatTime(new Date()));
+      await delay(BUTTONS_APPEAR_MS);
       renderButtons(["WhatsApp", "Call", "Email"], 0);
-      await delay(AFTER_BUTTON_DELAY);
+      await delay(AFTER_LEAD_DELAY_MS);
       chooseButton(0);
       await delay(500);
       addBubble("WhatsApp", true, formatTime(new Date()));
       hideButtons();
-      await delay(1200);
+      await delay(MIN_BOT_DELAY_MS);
 
       // 8) Result card
       resultDetails.textContent =
         "Budget: 75L–1Cr | Timeline: 3 months | Intent: Personal | Location: Bopal";
       resultStatus.textContent =
         "Status: Assigned to sales team. Follow-up triggered. Site visit scheduling initiated.";
-      resultTime.textContent = "Right now · " + formatTime(new Date());
+      resultTime.textContent = "Time taken: 94 seconds. Human involvement: Zero.";
       resultWrap.style.display = "block";
       resultWrap.offsetHeight;
       resultWrap.classList.add("wa-result-visible");
+      if (footerStats) footerStats.style.display = "none";
       scrollToBottom();
     })();
 

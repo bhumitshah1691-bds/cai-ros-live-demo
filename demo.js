@@ -1,10 +1,11 @@
 /**
- * CAI-ROS Live Demo — Vanilla JS navigation
- * Right arrow or click advances to next screen.
+ * CAI-ROS Live Demo — Navigation
+ * Right arrow or click: next. Left arrow: previous.
+ * No visible nav. Counter 01 / 07. Dissolve transition.
  */
 
 (function () {
-  const TOTAL_SCREENS = 6;
+  const TOTAL_SCREENS = 7;
   const screenIds = Array.from({ length: TOTAL_SCREENS }, (_, i) => "screen-" + (i + 1));
   var closingTimeouts = [];
 
@@ -20,12 +21,22 @@
     return idx >= 0 ? idx : 0;
   }
 
+  function updateCounter() {
+    const i = getCurrentIndex();
+    const el = document.getElementById("nav-counter-text");
+    if (el) {
+      const n = String(i + 1).padStart(2, "0");
+      el.textContent = n + " / " + String(TOTAL_SCREENS).padStart(2, "0");
+    }
+  }
+
   function goToScreen(index) {
     const screens = getScreens();
     if (screens.length === 0) return;
     const i = Math.max(0, Math.min(index, screens.length - 1));
     screens.forEach((el, j) => el.classList.toggle("active", j === i));
-    if (i === 5) startClosingSequence();
+    updateCounter();
+    if (i === 6) startClosingSequence();
   }
 
   function resetClosingScreen() {
@@ -54,19 +65,23 @@
     var cta = document.getElementById("closing-lets-begin");
     if (!story || !final) return;
 
+    // Lines 1–3 with 3 second intervals
     closingTimeouts.push(setTimeout(function () { if (line1) line1.classList.add("visible"); }, 0));
-    closingTimeouts.push(setTimeout(function () { if (line2) line2.classList.add("visible"); }, 2000));
-    closingTimeouts.push(setTimeout(function () { if (line3) line3.classList.add("visible"); }, 4000));
+    closingTimeouts.push(setTimeout(function () { if (line2) line2.classList.add("visible"); }, 3000));
+    closingTimeouts.push(setTimeout(function () { if (line3) line3.classList.add("visible"); }, 6000));
+    // Fade out story
     closingTimeouts.push(setTimeout(function () {
       if (story) story.classList.add("fade-out");
-    }, 7000));
+    }, 9000));
+    // 1.5s pure black silence, then punchline
     closingTimeouts.push(setTimeout(function () {
       if (final) final.classList.add("visible");
       if (punchline) punchline.classList.add("visible");
-    }, 7800));
-    closingTimeouts.push(setTimeout(function () { if (logo) logo.classList.add("visible"); }, 10300));
-    closingTimeouts.push(setTimeout(function () { if (tagline) tagline.classList.add("visible"); }, 12800));
-    closingTimeouts.push(setTimeout(function () { if (cta) cta.classList.add("visible"); }, 15300));
+    }, 10500));
+    // 2s pause then logo
+    closingTimeouts.push(setTimeout(function () { if (logo) logo.classList.add("visible"); }, 12500));
+    closingTimeouts.push(setTimeout(function () { if (tagline) tagline.classList.add("visible"); }, 14000));
+    closingTimeouts.push(setTimeout(function () { if (cta) cta.classList.add("visible"); }, 15000));
   }
 
   function nextScreen() {
@@ -75,19 +90,28 @@
     goToScreen(next);
   }
 
+  function prevScreen() {
+    const current = getCurrentIndex();
+    if (current > 0) goToScreen(current - 1);
+  }
+
   function init() {
     var hash = (location.hash || "").toLowerCase();
     var startIndex = 0;
     if (hash === "#viz" || hash === "#screen-3") startIndex = 2;
     else if (hash === "#wa" || hash === "#screen-4" || hash === "#chat") startIndex = 3;
     else if (hash === "#dashboard" || hash === "#screen-5" || hash === "#leads") startIndex = 4;
-    else if (hash === "#closing" || hash === "#screen-6") startIndex = 5;
+    else if (hash === "#roadmap" || hash === "#screen-6") startIndex = 5;
+    else if (hash === "#closing" || hash === "#screen-7") startIndex = 6;
     goToScreen(startIndex);
 
     document.addEventListener("keydown", function (e) {
       if (e.key === "ArrowRight") {
         e.preventDefault();
         nextScreen();
+      } else if (e.key === "ArrowLeft") {
+        e.preventDefault();
+        prevScreen();
       }
     });
 
@@ -120,6 +144,8 @@
       if (getCurrentIndex() === 0) return;
       nextScreen();
     });
+
+    updateCounter();
   }
 
   if (document.readyState === "loading") {
