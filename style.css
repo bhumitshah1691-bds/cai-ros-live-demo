@@ -27,6 +27,8 @@ html {
   font-size: 16px;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  overflow-y: auto;
+  scroll-behavior: smooth;
 }
 
 body {
@@ -34,7 +36,8 @@ body {
   padding: 0;
   width: 100vw;
   min-height: 100vh;
-  overflow: hidden;
+  overflow-y: auto;
+  scroll-behavior: smooth;
   background: var(--bg);
   font-family: "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
   font-weight: 400;
@@ -65,8 +68,8 @@ body .wa-btn {
 .presentation {
   position: relative;
   width: 100vw;
-  height: 100vh;
-  overflow: hidden;
+  min-height: 100vh;
+  overflow: visible;
 }
 
 .screen {
@@ -74,8 +77,10 @@ body .wa-btn {
   top: 0;
   left: 0;
   width: 100vw;
-  height: 100vh;
-  overflow: hidden;
+  min-height: 100vh;
+  overflow: visible;
+  padding: 60px 48px;
+  box-sizing: border-box;
   opacity: 0;
   visibility: hidden;
   pointer-events: none;
@@ -112,7 +117,6 @@ body .wa-btn {
   display: flex;
   align-items: center;
   justify-content: center;
-  overflow: hidden;
 }
 
 #screen-1::before {
@@ -348,11 +352,23 @@ body .wa-btn {
 .viz-overlay {
   position: relative;
   width: 100%;
-  height: 100vh;
+  min-height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding-top: 32px;
+  padding: 0;
+}
+
+/* Headline: fixed zone at top — no overlap with hex nodes */
+.viz-headline-zone {
+  position: relative;
+  z-index: 10;
+  padding-top: 48px;
+  padding-bottom: 48px;
+  width: 100%;
+  text-align: center;
+  background: transparent;
+  pointer-events: none;
 }
 
 .viz-tagline {
@@ -360,26 +376,34 @@ body .wa-btn {
   font-weight: 700;
   font-size: clamp(16px, 2vw, 28px);
   color: var(--text);
-  margin: 0 0 16px;
+  margin: 0;
   text-align: center;
 }
 
-.viz-container {
-  position: absolute;
-  inset: 0;
+/* Hex canvas: starts below headline; ≥60px clearance from headline to top node (Meta) */
+.viz-hex-canvas {
+  position: relative;
   width: 100%;
   max-width: min(90vw, 800px);
-  left: 50%;
-  transform: translateX(-50%);
+  margin-top: 150px;
+  flex: 1;
+  min-height: 420px;
+}
+
+.viz-container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  min-height: 420px;
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   justify-content: center;
 }
 
-/* Hub: 120px outer, inner 80px, pulse ring — center at 58% viewport height */
+/* Hub: center of hex canvas (50% of .viz-container) */
 .viz-hub {
   position: absolute;
-  top: 58%;
+  top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
   width: 120px;
@@ -435,10 +459,10 @@ body .wa-btn {
   100% { transform: scale(1); }
 }
 
-/* Source nodes: hexagonal at 260px radius, 64px circles — anchor at 58% to match hub */
+/* Source nodes: hexagonal at 260px radius — anchor at center of hex canvas */
 .viz-source {
   position: absolute;
-  top: 58%;
+  top: 50%;
   left: 50%;
   display: flex;
   flex-direction: column;
@@ -497,12 +521,11 @@ body .wa-btn {
 .viz-source-4 { transform: translate(-225.2px, 130px); margin-left: -32px; margin-top: -32px; }
 .viz-source-5 { transform: translate(-225.2px, -130px); margin-left: -32px; margin-top: -32px; }
 
-/* Right panel — Live Feed */
+/* Right panel — Live Feed: top aligned with hex canvas */
 .viz-feed {
-  position: fixed;
-  top: 50%;
+  position: absolute;
+  top: 150px;
   right: calc(var(--unit) * 3);
-  transform: translateY(-50%);
   width: 280px;
   max-height: 60vh;
   background: var(--surface);
@@ -1154,7 +1177,6 @@ body .wa-btn {
   flex-direction: column;
   align-items: center;
   padding: 32px calc(var(--unit) * 4) 16px;
-  overflow: hidden;
 }
 
 .roadmap-headline {
