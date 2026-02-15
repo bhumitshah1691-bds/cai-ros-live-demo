@@ -813,6 +813,15 @@ body .wa-btn {
 }
 
 /* Screen 3 — Mobile: vertical source list (replaces hex) */
+/* Base: hide mobile sources; show desktop hex by default */
+.mobile-sources {
+  display: none;
+}
+
+.desktop-hex-canvas {
+  display: block;
+}
+
 .viz-mobile-wrap {
   display: none;
   width: 100%;
@@ -1018,6 +1027,16 @@ body .wa-btn {
   }
   .viz-counter-value {
     font-size: clamp(24px, 8vw, 36px);
+  }
+}
+
+/* Screen 3 — Desktop/Tablet: hide mobile card list, show hexagonal canvas */
+@media (min-width: 768px) {
+  .mobile-sources {
+    display: none !important;
+  }
+  .desktop-hex-canvas {
+    display: block !important;
   }
 }
 
