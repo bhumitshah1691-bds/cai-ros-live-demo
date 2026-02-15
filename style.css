@@ -967,7 +967,7 @@ body .wa-btn {
 @media (max-width: 767px) {
   .viz-screen .viz-overlay {
     flex-direction: column;
-    padding-bottom: 80px;
+    padding-bottom: 140px; /* space for fixed counter strip + nav bar */
   }
   .viz-headline-zone {
     padding-top: 32px;
@@ -997,12 +997,27 @@ body .wa-btn {
     max-height: 200px;
   }
   .viz-counter {
-    position: relative;
-    bottom: auto;
-    left: auto;
+    position: fixed;
+    bottom: 72px;
+    left: 0;
+    right: 0;
     transform: none;
     order: 3;
-    padding-top: 16px;
+    padding: 12px 24px;
+    margin: 0;
+    flex-direction: row;
+    justify-content: center;
+    align-items: baseline;
+    gap: 10px;
+    background: linear-gradient(to top, rgba(8, 8, 8, 0.98) 0%, rgba(8, 8, 8, 0.95) 70%, transparent 100%);
+    z-index: 100;
+  }
+  .viz-counter-label {
+    font-size: 9px;
+    letter-spacing: 0.12em;
+  }
+  .viz-counter-value {
+    font-size: clamp(24px, 8vw, 36px);
   }
 }
 
