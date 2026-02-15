@@ -35,10 +35,14 @@
   const COUNTER_TARGET = 23;
   const RADIUS = 260;
 
+  const MOBILE_FEED_MAX = 3;
+  const MOBILE_ADD_INTERVAL_MS = 2500;
+
   let container, hub, hubCore, feedList, counterEl;
   let sourceEls = [];
   let feedItems = [];
   let intervalId = null;
+  let mobileIntervalId = null;
   let isActive = false;
 
   function pickRandom(arr) {
@@ -178,7 +182,8 @@
       '<span class="viz-feed-time">just now</span>';
 
     feedItems.unshift(li);
-    if (feedItems.length > 5) feedItems.pop();
+    var maxItems = (typeof window !== "undefined" && window.matchMedia && window.matchMedia("(max-width: 767px)").matches) ? MOBILE_FEED_MAX : 5;
+    if (feedItems.length > maxItems) feedItems.pop();
 
     if (feedList) {
       feedList.innerHTML = "";
@@ -216,13 +221,30 @@
     requestAnimationFrame(tick);
   }
 
+  function isMobile() {
+    return typeof window !== "undefined" && window.matchMedia && window.matchMedia("(max-width: 767px)").matches;
+  }
+
   function start() {
     if (isActive) return;
     isActive = true;
     if (counterEl) counterEl.textContent = "0";
     animateCounter();
-    fireRandomSources();
-    intervalId = scheduleNext();
+    if (isMobile()) {
+      mobileIntervalId = setInterval(function () {
+        if (!isActive) return;
+        var src = SOURCES[Math.floor(Math.random() * SOURCES.length)];
+        var lead = randomLead(src);
+        addToFeed(lead);
+        if (hubCore) {
+          hubCore.classList.add("viz-hub-hit");
+          setTimeout(function () { if (hubCore) hubCore.classList.remove("viz-hub-hit"); }, 400);
+        }
+      }, MOBILE_ADD_INTERVAL_MS);
+    } else {
+      fireRandomSources();
+      intervalId = scheduleNext();
+    }
   }
 
   function stop() {
@@ -230,6 +252,10 @@
     if (intervalId) {
       clearTimeout(intervalId);
       intervalId = null;
+    }
+    if (mobileIntervalId) {
+      clearInterval(mobileIntervalId);
+      mobileIntervalId = null;
     }
   }
 

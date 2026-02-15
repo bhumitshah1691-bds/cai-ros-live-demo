@@ -95,6 +95,10 @@
     if (current > 0) goToScreen(current - 1);
   }
 
+  var swipeHandled = false;
+  var touchStartX = 0;
+  var SWIPE_MIN = 50;
+
   function init() {
     var hash = (location.hash || "").toLowerCase();
     var startIndex = 0;
@@ -141,9 +145,31 @@
     }
 
     document.body.addEventListener("click", function (e) {
+      if (swipeHandled) {
+        swipeHandled = false;
+        return;
+      }
+      if (e.target.closest("button")) return;
       if (getCurrentIndex() === 0) return;
       nextScreen();
     });
+
+    document.body.addEventListener("touchstart", function (e) {
+      touchStartX = e.changedTouches ? e.changedTouches[0].clientX : e.touches[0].clientX;
+    }, { passive: true });
+
+    document.body.addEventListener("touchend", function (e) {
+      if (!e.changedTouches || !e.changedTouches[0]) return;
+      var endX = e.changedTouches[0].clientX;
+      var delta = touchStartX - endX;
+      if (delta > SWIPE_MIN) {
+        swipeHandled = true;
+        nextScreen();
+      } else if (delta < -SWIPE_MIN) {
+        swipeHandled = true;
+        prevScreen();
+      }
+    }, { passive: true });
 
     updateCounter();
   }
