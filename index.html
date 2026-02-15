@@ -22,7 +22,6 @@
           <p class="keynote-stat">This happened 47 times last month.</p>
         </div>
         <p class="keynote-punchline">You never knew.</p>
-        <button type="button" class="keynote-continue" id="keynote-continue">Continue</button>
       </div>
     </div>
     <div id="screen-2" class="screen split-screen">
@@ -47,7 +46,6 @@
           <li><span class="split-dash">—</span> Every serious buyer reaches a salesperson. Every time.</li>
         </ul>
       </div>
-      <button type="button" class="split-cta" id="see-it-live">See It Live</button>
     </div>
     <div id="screen-3" class="screen viz-screen">
       <div class="viz-overlay">
@@ -351,14 +349,35 @@
           <p class="closing-punchline" id="closing-punchline">You already know the answer.</p>
           <div class="closing-logo" id="closing-logo" aria-hidden="true">CAI-ROS</div>
           <p class="closing-tagline" id="closing-tagline">The Sales Discipline Engine. Built for Ahmedabad.</p>
-          <button type="button" class="closing-cta" id="closing-lets-begin">Let's Begin</button>
         </div>
       </div>
     </div>
   </main>
-  <nav class="nav-counter" aria-label="Slide progress">
-    <span id="nav-counter-text">01 / 07</span>
-    <p class="tap-hint" id="tap-hint" aria-hidden="true">Tap to continue</p>
+  <!-- First-screen entry hint (Screen 1 only, after "You never knew.") -->
+  <p class="first-screen-hint" id="first-screen-hint" aria-hidden="true">→  Tap or press any key to continue</p>
+
+  <!-- Mobile: tap anywhere hint (above nav, hide after first tap) -->
+  <p class="tap-anywhere-hint" id="tap-anywhere-hint" aria-hidden="true">Tap anywhere to continue</p>
+
+  <nav class="nav-bar" aria-label="Slide navigation">
+    <div class="nav-bar-left">
+      <span class="nav-counter-text" id="nav-counter-text">01 / 07</span>
+    </div>
+    <div class="nav-bar-dots" id="nav-dots" aria-hidden="true">
+      <span class="nav-dot" data-index="0" aria-current="true"></span>
+      <span class="nav-dot" data-index="1"></span>
+      <span class="nav-dot" data-index="2"></span>
+      <span class="nav-dot" data-index="3"></span>
+      <span class="nav-dot" data-index="4"></span>
+      <span class="nav-dot" data-index="5"></span>
+      <span class="nav-dot" data-index="6"></span>
+    </div>
+    <div class="nav-bar-right">
+      <button type="button" class="nav-next-btn" id="nav-next-btn" aria-label="Next screen">
+        <span class="nav-next-label">Next</span>
+        <span class="nav-next-arrow" aria-hidden="true">→</span>
+      </button>
+    </div>
   </nav>
   <script src="demo.js"></script>
   <script src="viz.js"></script>
